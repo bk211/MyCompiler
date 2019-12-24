@@ -1,0 +1,6 @@
+print_str("salut !")
+print_nl()
+print_num(42)
+print_nl()
+print_num(head(tail(pair(1, pair(2, ())))))
+print_nl()
