@@ -12,7 +12,7 @@
 (define-empty-tokens operators
   (Leof
    Lassign
-   Lplus
+   Lplus Lmul
    Lopar Lcpar Lcomma Lsep))
 
 (define-lex-abbrev identifier
@@ -26,6 +26,7 @@
    [whitespace   (return-without-pos (get-token input-port))]
    ["="          (token-Lassign)]
    ["+"          (token-Lplus)]
+   ["*"          (token-Lmul)]
    ["("          (token-Lopar)]
    [")"          (token-Lcpar)]
    [","          (token-Lcomma)]

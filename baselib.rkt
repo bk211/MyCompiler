@@ -7,6 +7,7 @@
 (define *baselib-types*
   (make-immutable-hash
    (list (cons '%add (Fun 'num (list 'num 'num)))
+         (cons '%mul (Fun 'num (list 'num 'num)))
          (cons 'print_num (Fun 'void (list 'num)))
          (cons 'print_str (Fun 'void (list 'str)))
          (cons 'print_nl  (Fun 'void (list)))
@@ -20,6 +21,10 @@
                (list (Lw 't0 (Mem 'sp 4))
                      (Lw 't1 (Mem 'sp 0))
                      (Add 'v0 't0 't1)))
+         (cons '%mul
+               (list (Lw 't0 (Mem 'sp 4))
+                     (Lw 't1 (Mem 'sp 0))
+                     (Mul 'v0 't0 't1)))   
          (cons 'print_num
                (list (Lw 'a0 (Mem 'sp 0))
                      (Li 'v0 PRINT_INT)
