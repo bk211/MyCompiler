@@ -1,0 +1,2 @@
+cond: bool = True
+print_bool(cond)

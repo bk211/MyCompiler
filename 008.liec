@@ -1,0 +1,5 @@
+a: int = read_int()
+if a < 10:
+    print_str("yope")
+else:
+    print_str("nope")

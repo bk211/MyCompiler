@@ -1,0 +1,5 @@
+pouet: [int] = [ 3, 2, 1, 0 ]
+lala: [int] = int_cons(4, pouet)
+quatre: int = int_head(lala)
+print_bool(quatre == 4)
+print_bool(pouet == int_tail(lala)) # égalité des pointeurs

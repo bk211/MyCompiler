@@ -1,0 +1,4 @@
+n: int = 42
+p: int = n + 9
+truc: int = -5 + p / 3
+print_int(truc)
