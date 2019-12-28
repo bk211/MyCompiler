@@ -8,8 +8,11 @@
 (struct Pstr (s pos))
 (struct Pvar (v pos))
 (struct Pexpr (expr pos))
-(struct Passign (var expr pos))
+(struct Passign (var expr pos type)) 
 (struct Pcall (func args pos))
+(struct Tint (t pos))
+(struct Tstr (t pos))
+
 
 ;;; types
 (struct Fun (ret args) #:transparent)

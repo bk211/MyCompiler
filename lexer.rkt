@@ -12,6 +12,8 @@
 (define-empty-tokens operators
   (Leof
    Lassign
+   Lcolon
+   LTint LTstr
    Lplus Lmul
    Lopar Lcpar Lcomma Lsep))
 
@@ -24,6 +26,9 @@
    [(eof)        (token-Leof)]
    ["\n"         (token-Lsep)]
    [whitespace   (return-without-pos (get-token input-port))]
+   [":"          (token-Lcolon)]
+   ["int"        (token-LTint)]
+   ["str"        (token-LTstr)]
    ["="          (token-Lassign)]
    ["+"          (token-Lplus)]
    ["*"          (token-Lmul)]

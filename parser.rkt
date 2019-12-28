@@ -20,8 +20,12 @@
      [(instr)           (list $1)]
      [(instr Lsep prog) (cons $1 $3)])
     (instr
-     [(Lident Lassign expr) (Passign $1 $3 $2-start-pos)]
+     [(Lident Lcolon type Lassign expr) (Passign $1 $5 $4-start-pos $3)]
      [(expr)                (Pexpr $1 $1-start-pos)])
+    (type
+     [(LTint)        (Tint "int" $1-start-pos)]
+     [(LTstr)        (Tstr "str" $1-start-pos)]
+     )
     (expr
      [(Lopar Lcpar)             (Pnil $1-start-pos)]
      [(Lnum)                    (Pnum $1 $1-start-pos)]

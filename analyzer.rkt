@@ -51,7 +51,7 @@
 
 (define (analyze-instr instr env)
   (match instr
-    [(Passign v e pos)
+    [(Passign v e pos type)
      (let ([ae (analyze-expr e env)])
        (cons (Assign v (car ae))
              (hash-set env v (cdr ae))))]
