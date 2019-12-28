@@ -22,7 +22,7 @@
     [(Lw r l)     (printf "  lw $~a, ~a\n" r (format-loc l))]
     [(Addi d r i) (printf "  addi $~a, $~a, ~a\n" d r i)]
     [(Add d r s)  (printf "  add $~a, $~a, $~a\n" d r s)]
-    [(Mul d r s)  (printf "  mult $~a, $~a\n  mflo $~a" r s d)]
+    [(Mul d r s)  (printf "  mult $~a, $~a\n  mflo $~a\n" r s d)]
     [(Syscall)    (printf "  syscall\n")]
     [(Jal l)      (printf "  jal ~a\n" (format-loc l))]
     [(Jr r)       (printf "  jr $~a\n" r)]))
