@@ -1,2 +1,2 @@
 a: int = 42
-print_int(a)
+print_num(a)
