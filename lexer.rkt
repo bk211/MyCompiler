@@ -13,7 +13,7 @@
   (Leof
    Lassign
    Lcolon
-   LTint LTstr
+   LTint LTstr LTbool
    Lplus Lminus Lmul Ldiv
    Lopar Lcpar Lcomma Lsep))
 
@@ -29,6 +29,7 @@
    [":"          (token-Lcolon)]
    ["int"        (token-LTint)]
    ["str"        (token-LTstr)]
+   ["bool"        (token-LTbool)]
    ["="          (token-Lassign)]
    ["+"          (token-Lplus)]
    ["-"          (token-Lminus)]
