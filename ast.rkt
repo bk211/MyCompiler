@@ -7,12 +7,13 @@
 (struct Pnum (n pos))
 (struct Pstr (s pos))
 (struct Pvar (v pos))
+(struct Pboolean (v pos))
 (struct Pexpr (expr pos))
 (struct Passign (var expr pos type)) 
 (struct Pcall (func args pos))
 (struct Tint (t pos))
 (struct Tstr (t pos))
-
+(struct Tboolean (t pos))
 
 ;;; types
 (struct Fun (ret args) #:transparent)
@@ -23,6 +24,7 @@
 (struct Num (n))
 (struct Str (s))
 (struct Var (v))
+(struct Boolean (v))
 (struct Expr (e))
 (struct Assign (var expr))
 (struct Call (func args))

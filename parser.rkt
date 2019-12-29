@@ -25,13 +25,16 @@
     (type
      [(LTint)        (Tint "int" $1-start-pos)]
      [(LTstr)        (Tstr "str" $1-start-pos)]
+     [(LTboolean)    (Tboolean "boolean" $1-start-pos)]
      )
     (expr
      [(Lopar Lcpar)             (Pnil $1-start-pos)]
      [(Lnum)                    (Pnum $1 $1-start-pos)]
      [(Lstr)                    (Pstr $1 $1-start-pos)]
      [(Lident)                  (Pvar $1 $1-start-pos)]
+     [(Lboolean)                (Pboolean $1 $1-start-pos)]
      [(Lident Lopar args Lcpar) (Pcall $1 $3 $1-start-pos)]
+     [(expr greater expr)       (Pcall '%compare (list $1 $3) $2-start-pos)]
      [(expr Lplus expr)         (Pcall '%add (list $1 $3) $2-start-pos)]
      [(Lplus expr)              (Pcall '%add (list (Pnum 0 $1-start-pos) $2) $1-start-pos)]
      [(expr Lminus expr)        (Pcall '%sub (list $1 $3) $2-start-pos)]

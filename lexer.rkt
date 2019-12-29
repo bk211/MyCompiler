@@ -7,13 +7,14 @@
 (provide constants operators get-token)
 
 (define-tokens constants
-  (Lnum Lstr Lident))
+  (Lnum Lstr Lident Lboolean))
 
 (define-empty-tokens operators
   (Leof
    Lassign
    Lcolon
-   LTint LTstr LTbool
+   LTint LTstr LTboolean
+   Llesser Lgreater
    Lplus Lminus Lmul Ldiv
    Lopar Lcpar Lcomma Lsep))
 
@@ -29,7 +30,13 @@
    [":"          (token-Lcolon)]
    ["int"        (token-LTint)]
    ["str"        (token-LTstr)]
-   ["bool"        (token-LTbool)]
+   ["bool"       (token-LTboolean)]
+   ["True"       (token-Lboolean 1)]
+   ["False"      (token-Lboolean 0)]
+   ["true"       (token-Lboolean 1)]
+   ["false"      (token-Lboolean 0)]
+   ["<"          (token-Llesser)]
+   [">"          (token-Lgreater)]
    ["="          (token-Lassign)]
    ["+"          (token-Lplus)]
    ["-"          (token-Lminus)]

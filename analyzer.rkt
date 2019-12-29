@@ -23,6 +23,9 @@
     [(Pnum n pos)
      (cons (Num n)
            'num)]
+    [(Pboolean n pos)
+     (cons (Num n)
+           'num)]
     [(Pstr s pos)
      (cons (Str s)
            'str)]
