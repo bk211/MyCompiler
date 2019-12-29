@@ -34,7 +34,7 @@
      [(Lident)                  (Pvar $1 $1-start-pos)]
      [(Lboolean)                (Pboolean $1 $1-start-pos)]
      [(Lident Lopar args Lcpar) (Pcall $1 $3 $1-start-pos)]
-     [(expr greater expr)       (Pcall '%compare (list $1 $3) $2-start-pos)]
+     [(expr Llesser expr)       (Pcall '%lesser (list $1 $3) $2-start-pos)]
      [(expr Lplus expr)         (Pcall '%add (list $1 $3) $2-start-pos)]
      [(Lplus expr)              (Pcall '%add (list (Pnum 0 $1-start-pos) $2) $1-start-pos)]
      [(expr Lminus expr)        (Pcall '%sub (list $1 $3) $2-start-pos)]
@@ -47,7 +47,8 @@
      [(expr)             (list $1)]
      [(expr Lcomma args) (cons $1 $3)]))
    (precs
-    (left Lmul Ldiv Lplus Lminus))
+    (left Lmul Ldiv Lplus Lminus)
+    (right Lgreater Llesser))
    (error (lambda (tok-ok? tok-name tok-value start-pos end-pos)
             (err (format "syntax error near ~a~a"
                          (substring (symbol->string tok-name) 1)

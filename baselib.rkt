@@ -10,7 +10,7 @@
          (cons '%sub (Fun 'num (list 'num 'num)))
          (cons '%mul (Fun 'num (list 'num 'num)))
          (cons '%div (Fun 'num (list 'num 'num)))
-         (cons '%compare (Fun 'num (list 'num 'num)))
+         (cons '%lesser (Fun 'num (list 'num 'num)))
          (cons 'print_int (Fun 'void (list 'num)))
          (cons 'print_bool (Fun 'void (list 'num)))
          (cons 'print_str (Fun 'void (list 'str)))
@@ -37,14 +37,10 @@
                (list (Lw 't0 (Mem 'sp 4))
                      (Lw 't1 (Mem 'sp 0))
                      (Div 'v0 't0 't1)))
-
-         (cons '%compare 
+         (cons '%lesser 
                (list (Lw 't0 (Mem 'sp 4))
                      (Lw 't1 (Mem 'sp 0))
-                     (Compare 'v0 't0 't1) 
-                     )
-                )
-
+                     (Lesser 'v0 't0 't1)))
          (cons 'print_int
                (list (Lw 'a0 (Mem 'sp 0))
                      (Li 'v0 PRINT_INT)

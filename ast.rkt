@@ -43,6 +43,7 @@
 (struct Sub (dst rg1 rg2))
 (struct Mul (dst rg1 rg2))
 (struct Div (dst rg1 rg2))
+(struct Lesser (dst rg1 rg2))
 (struct Sw (reg loc))
 (struct Lw (reg loc))
 (struct Move (dst reg))
