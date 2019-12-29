@@ -33,14 +33,17 @@
      [(Lident)                  (Pvar $1 $1-start-pos)]
      [(Lident Lopar args Lcpar) (Pcall $1 $3 $1-start-pos)]
      [(expr Lplus expr)         (Pcall '%add (list $1 $3) $2-start-pos)]
-     [(expr Lmul expr)         (Pcall '%mul (list $1 $3) $2-start-pos)]
+     [(Lplus expr)              (Pcall '%add (list (Pnum 0 $1-start-pos) $2) $1-start-pos)]
+     [(expr Lminus expr)        (Pcall '%sub (list $1 $3) $2-start-pos)]
+     [(Lminus expr)             (Pcall '%sub (list (Pnum 0 $1-start-pos) $2) $1-start-pos)]
+     [(expr Lmul expr)          (Pcall '%mul (list $1 $3) $2-start-pos)]
      )
     (args
      [()                 (list)]
      [(expr)             (list $1)]
      [(expr Lcomma args) (cons $1 $3)]))
    (precs
-    (left Lmul Lplus))
+    (left Lmul Lplus Lminus))
    (error (lambda (tok-ok? tok-name tok-value start-pos end-pos)
             (err (format "syntax error near ~a~a"
                          (substring (symbol->string tok-name) 1)

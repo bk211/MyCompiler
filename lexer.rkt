@@ -14,7 +14,7 @@
    Lassign
    Lcolon
    LTint LTstr
-   Lplus Lmul
+   Lplus Lmul Lminus
    Lopar Lcpar Lcomma Lsep))
 
 (define-lex-abbrev identifier
@@ -31,6 +31,7 @@
    ["str"        (token-LTstr)]
    ["="          (token-Lassign)]
    ["+"          (token-Lplus)]
+   ["-"          (token-Lminus)]
    ["*"          (token-Lmul)]
    ["("          (token-Lopar)]
    [")"          (token-Lcpar)]

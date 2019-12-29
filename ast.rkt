@@ -38,6 +38,7 @@
 (struct La (dst loc))
 (struct Addi (dst reg imm))
 (struct Add (dst rg1 rg2))
+(struct Sub (dst rg1 rg2))
 (struct Mul (dst rg1 rg2))
 (struct Sw (reg loc))
 (struct Lw (reg loc))
