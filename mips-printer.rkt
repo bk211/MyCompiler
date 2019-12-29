@@ -24,6 +24,7 @@
     [(Add d r s)  (printf "  add $~a, $~a, $~a\n" d r s)]
     [(Sub d r s)  (printf "  sub $~a, $~a, $~a\n" d r s)]
     [(Mul d r s)  (printf "  mult $~a, $~a\n  mflo $~a\n" r s d)]
+    [(Div d r s)  (printf "  div $~a, $~a\n  mflo $~a\n" r s d)]
     [(Syscall)    (printf "  syscall\n")]
     [(Jal l)      (printf "  jal ~a\n" (format-loc l))]
     [(Jr r)       (printf "  jr $~a\n" r)]))
