@@ -14,7 +14,7 @@
    Lassign
    Lcolon
    LTint LTstr LTboolean
-   Llesser Lgreater
+   Llesser LgreaterOrEqual Lequal Lgreater
    Lplus Lminus Lmul Ldiv
    Lopar Lcpar Lcomma Lsep))
 
@@ -37,6 +37,8 @@
    ["false"      (token-Lboolean 0)]
    ["<"          (token-Llesser)]
    [">"          (token-Lgreater)]
+   [">="         (token-LgreaterOrEqual)]
+   ["=="         (token-Lequal)]
    ["="          (token-Lassign)]
    ["+"          (token-Lplus)]
    ["-"          (token-Lminus)]

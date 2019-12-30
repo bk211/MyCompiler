@@ -53,7 +53,8 @@
      (append
       (apply append (map (lambda (a) (compile-and-push a env fp-sp)) as))
       (hash-ref env f)
-      (list (Addi 'sp 'sp (* 4 (length as)))))]))
+      (list (Addi 'sp 'sp (* 4 (length as)))))]
+      ))
 
 (define (compile-instr instr env fp-sp)
   ;;; compile an instruction

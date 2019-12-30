@@ -26,6 +26,13 @@
     [(Mul d r s)        (printf "  mult $~a, $~a\n  mflo $~a\n" r s d)]
     [(Div d r s)        (printf "  div $~a, $~a\n  mflo $~a\n" r s d)]
     [(Lesser d r s)     (printf "  slt $~a, $~a, $~a\n" d r s)]
+    [(Sll d r s)        (printf "  sll $~a, $~a, ~a\n" d r s)]
+    [(Srl d r s)        (printf "  srl $~a, $~a, ~a\n" d r s)]
+    
+    [(Ori d r i)        (printf "  ori $~a, $~a, ~a\n" d r i)]
+    [(Beq r1 r2 l)      (printf "  beq $~a, $~a, ~a\n" r1 r2 l)]
+    [(Bne r1 r2 l)      (printf "  bne $~a, $~a, ~a\n" r1 r2 l)]
+    [(Print-label l)    (printf "~a:\n" l)]
     [(Syscall)          (printf "  syscall\n")]
     [(Jal l)            (printf "  jal ~a\n" (format-loc l))]
     [(Jr r)             (printf "  jr $~a\n" r)]))
