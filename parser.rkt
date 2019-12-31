@@ -20,7 +20,6 @@
      [(instr)           (list $1)]
      [(instr Lsep prog) (cons $1 $3)])
     (instr
-     [(Lif expr Lcolon Lsep prog Lendif)    (Pif $2 $5 $1-start-pos)]
      [(Lident Lcolon type Lassign expr) (Passign $1 $5 $4-start-pos $3)]
      [(expr)                (Pexpr $1 $1-start-pos)])
     (type

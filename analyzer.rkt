@@ -64,7 +64,6 @@
          (errt 'void (cdr ae) (expr-pos e)))
        (cons (Expr (car ae))
              env))]
-    [(Pif cond instr)]
 ))
 
 (define (analyze-prog prog env)
