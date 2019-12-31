@@ -64,7 +64,7 @@
          (errt 'void (cdr ae) (expr-pos e)))
        (cons (Expr (car ae))
              env))]   
-    [(Pif cond pos)
+    [(Pif cond pos) ;; if we got an Pif, verify if cond return an 'num type 
      (let ([ac (analyze-expr cond env)])
        (unless (equal? 'num (cdr ac))
          (errt 'bool (cdr ac) (expr-pos cond)))
