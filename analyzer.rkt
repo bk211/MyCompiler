@@ -63,7 +63,9 @@
        (unless (equal? 'void (cdr ae))
          (errt 'void (cdr ae) (expr-pos e)))
        (cons (Expr (car ae))
-             env))]))
+             env))]
+    [(Pif cond instr)]
+))
 
 (define (analyze-prog prog env)
   (match prog

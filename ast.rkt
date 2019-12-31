@@ -10,6 +10,7 @@
 (struct Pboolean (v pos))
 (struct Pexpr (expr pos))
 (struct Passign (var expr pos type)) 
+(struct Pif (cond instr pos))
 (struct Pcall (func args pos))
 (struct Tint (t pos))
 (struct Tstr (t pos))

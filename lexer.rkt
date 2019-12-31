@@ -17,6 +17,9 @@
    Llesser LgreaterOrEqual LlesserOrEqual Lequal Lgreater
    Lplus Lminus Lmul Ldiv
    Lstrlen
+   Lif Lelse
+   Lendif Lendelse
+   Lobra Lcbra
    Lopar Lcpar Lcomma Lsep))
 
 (define-lex-abbrev identifier
@@ -36,8 +39,12 @@
    ["False"      (token-Lboolean 0)]
    ["true"       (token-Lboolean 1)]
    ["false"      (token-Lboolean 0)]
-   ["<"          (token-Llesser)]
+   ["if"         (token-Lif)]
+   ["else"       (token-Lelse)]
+   ["endif"      (token-Lendif)]
+   ["endelse"    (token-Lendelse)]
    [">"          (token-Lgreater)]
+   ["<"          (token-Llesser)]
    [">="         (token-LgreaterOrEqual)]
    ["<="         (token-LlesserOrEqual)]
    ["=="         (token-Lequal)]
@@ -48,6 +55,8 @@
    ["/"          (token-Ldiv)]
    ["("          (token-Lopar)]
    [")"          (token-Lcpar)]
+   ["["          (token-Lobra)]
+   ["]"          (token-Lcbra)]
    [","          (token-Lcomma)]
    [identifier   (token-Lident (string->symbol lexeme))]
    [(:+ numeric) (token-Lnum (string->number lexeme))]

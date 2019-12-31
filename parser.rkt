@@ -20,6 +20,7 @@
      [(instr)           (list $1)]
      [(instr Lsep prog) (cons $1 $3)])
     (instr
+     [(Lif expr Lcolon Lsep prog Lendif)    (Pif $2 $5 $1-start-pos)]
      [(Lident Lcolon type Lassign expr) (Passign $1 $5 $4-start-pos $3)]
      [(expr)                (Pexpr $1 $1-start-pos)])
     (type
@@ -34,19 +35,18 @@
      [(Lident)                        (Pvar $1 $1-start-pos)]
      [(Lboolean)                      (Pboolean $1 $1-start-pos)]
      [(Lident Lopar args Lcpar)       (Pcall $1 $3 $1-start-pos)]
-     [(expr Llesser expr)             (Pcall '%slt (list $1 $3) $2-start-pos)] ;; expr < expr
-     [(expr Lgreater expr)            (Pcall '%slt (list $3 $1) $2-start-pos)]
-     [(expr Lequal expr)              (Pcall '%equal (list $1 $3) $2-start-pos)]
-     [(expr LlesserOrEqual expr)      (Pcall '%lesserOrEqual (list $1 $3) $2-start-pos)]
-     [(expr LgreaterOrEqual expr)     (Pcall '%lesserOrEqual (list $3 $1) $2-start-pos)]
      [(expr Lplus expr)               (Pcall '%add (list $1 $3) $2-start-pos)]
      [(Lplus expr)                    (Pcall '%add (list (Pnum 0 $1-start-pos) $2) $1-start-pos)]
      [(expr Lminus expr)              (Pcall '%sub (list $1 $3) $2-start-pos)]
      [(Lminus expr)                   (Pcall '%sub (list (Pnum 0 $1-start-pos) $2) $1-start-pos)]
      [(expr Lmul expr)                (Pcall '%mul (list $1 $3) $2-start-pos)]
      [(expr Ldiv expr)                (Pcall '%div (list $1 $3) $2-start-pos)]
-;;     [(Lstrlen Lopar Lstr Lcpar)      (Pcall '%strlen (list $3) $1-start-pos)]
-     )
+     [(expr Llesser expr)             (Pcall '%slt (list $1 $3) $2-start-pos)] ;; expr < expr
+     [(expr Lgreater expr)            (Pcall '%slt (list $3 $1) $2-start-pos)]
+     [(expr Lequal expr)              (Pcall '%equal (list $1 $3) $2-start-pos)]
+     [(expr LlesserOrEqual expr)      (Pcall '%lesserOrEqual (list $1 $3) $2-start-pos)]
+     [(expr LgreaterOrEqual expr)     (Pcall '%lesserOrEqual (list $3 $1) $2-start-pos)]
+      )
     (args
      [()                 (list)]
      [(expr)             (list $1)]
