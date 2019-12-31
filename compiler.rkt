@@ -87,6 +87,46 @@
   
 )
 
+(define (compile-while cond env fp-sp)
+  ;;; compile an expression
+  ;; expr is the expression
+  ;; venv is the environment mapping variable names to their location on the stack, and function names to their code (either inlined or a jump)
+  ;; fp-sp is the current distance on the stack between the frame pointer and the stack pointer
+  (match cond
+    [(Nil)
+     (list 
+           (Print-while )
+           (Li 'v0 0)
+           (Beq-while 'v0 'zero)
+     )]
+    [(Num n)
+     (list (Print-while )
+           (Li 'v0 n)
+           (Beq-while 'v0 'zero)
+     )]
+    [(Data l)
+     (list   
+           (Print-while)
+           (La 'v0 (Lbl l)))]
+    [(Var v)
+     ;; if the expression is a reference to a variable, load its value from its location on the stack, which is stored in the environment
+     (list (Print-while)
+           (Lw 'v0 (hash-ref env v))
+           (Beq-while 'v0 'zero)
+      )]
+    [(Call f as)
+     ;; if the expression is a call to a function, first compile all its arguments and push them to the stack, then insert the function code from the environment, then pop the stack
+     (append
+      (list (Print-while))
+      (apply append (map (lambda (a) (compile-and-push a env fp-sp)) as))
+      (hash-ref env f)
+      (list (Addi 'sp 'sp (* 4 (length as))))
+      (list (Beq-while 'v0 'zero)))]
+      )
+  
+)
+
+
 (define (compile-instr instr env fp-sp)
   ;;; compile an instruction
   ;; instr is the instruction
@@ -105,6 +145,11 @@
     [(If e)
      ;; if the instruction is an if
      (cons (compile-if e env fp-sp)
+           (cons env
+                 fp-sp))]
+    [(While e)
+     ;; if the instruction is an while
+     (cons (compile-while e env fp-sp)
            (cons env
                  fp-sp))]
 ))

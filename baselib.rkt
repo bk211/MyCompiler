@@ -6,24 +6,26 @@
 
 (define *baselib-types*
   (make-immutable-hash
-   (list (cons '%add (Fun 'num (list 'num 'num)))
-         (cons '%sub (Fun 'num (list 'num 'num)))
-         (cons '%mul (Fun 'num (list 'num 'num)))
-         (cons '%div (Fun 'num (list 'num 'num)))
-         (cons '%slt (Fun 'num (list 'num 'num)))
-         (cons '%equal (Fun 'num (list 'num 'num)))
-         (cons '%lesserOrEqual (Fun 'num (list 'num 'num)))
-         (cons 'print_int (Fun 'void (list 'num)))
-         (cons 'print_bool (Fun 'void (list 'num)))
-         (cons 'print_str (Fun 'void (list 'str)))
-         (cons 'print_nl  (Fun 'void (list)))
-         (cons 'str_len  (Fun 'num (list 'str)))
-         (cons 'read_int  (Fun 'num (list)))
-         (cons '%if   (Fun 'void (list)))
-         (cons '%endif   (Fun 'void (list)))
-         (cons 'pair (Fun (Pair 'num) (list 'num (Pair 'num))))
-         (cons 'head (Fun 'num (list (Pair 'num))))
-         (cons 'tail (Fun (Pair 'num) (list (Pair 'num)))))))
+   (list (cons '%add            (Fun 'num (list 'num 'num)))
+         (cons '%sub            (Fun 'num (list 'num 'num)))
+         (cons '%mul            (Fun 'num (list 'num 'num)))
+         (cons '%div            (Fun 'num (list 'num 'num)))
+         (cons '%slt            (Fun 'num (list 'num 'num)))
+         (cons '%equal          (Fun 'num (list 'num 'num)))
+         (cons '%lesserOrEqual  (Fun 'num (list 'num 'num)))
+         (cons 'print_int       (Fun 'void (list 'num)))
+         (cons 'print_num       (Fun 'void (list 'num)))
+         (cons 'print_bool      (Fun 'void (list 'num)))
+         (cons 'print_str       (Fun 'void (list 'str)))
+         (cons 'print_nl        (Fun 'void (list)))
+         (cons 'str_len         (Fun 'num (list 'str)))
+         (cons 'read_int        (Fun 'num (list)))
+         (cons '%if             (Fun 'void (list)))
+         (cons '%endif          (Fun 'void (list)))
+         (cons '%endwhile       (Fun 'void (list)))
+         (cons 'pair            (Fun (Pair 'num) (list 'num (Pair 'num))))
+         (cons 'head            (Fun 'num (list (Pair 'num))))
+         (cons 'tail            (Fun (Pair 'num) (list (Pair 'num)))))))
 
 (define *baselib*
   (make-immutable-hash
@@ -71,6 +73,10 @@
                (list (Lw 'a0 (Mem 'sp 0))
                      (Li 'v0 PRINT_INT)
                      (Syscall)))
+         (cons 'print_num
+               (list (Lw 'a0 (Mem 'sp 0))
+                     (Li 'v0 PRINT_INT)
+                     (Syscall)))
          (cons 'print_bool
                (list (Lw 'a0 (Mem 'sp 0))
                      (Li 'v0 PRINT_INT)
@@ -111,6 +117,12 @@
                (list 
                      (Print-if)
                      (Inc-uniq-if)
+                     ))
+         (cons '%endwhile
+               (list 
+                     (Jwhile)
+                     (Print-while-exit)
+                     (Inc-uniq-while)
                      ))
          (cons '%add
                (list (Lw 't0 (Mem 'sp 4))

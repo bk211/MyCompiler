@@ -70,6 +70,12 @@
          (errt 'bool (cdr ac) (expr-pos cond)))
        (cons (If (car ac))
              env))]
+    [(Pwhile cond pos)
+     (let ([ac (analyze-expr cond env)])
+       (unless (equal? 'num (cdr ac))
+         (errt 'bool (cdr ac) (expr-pos cond)))
+       (cons (While (car ac))
+             env))]
 ))
 
 (define (analyze-prog prog env)

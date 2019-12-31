@@ -41,7 +41,12 @@
     [(If e)
      (let ([se (collect-constant-strings e)])
        (cons (If (car se))
-             (cdr se)))]))
+             (cdr se)))]
+    [(While e)
+     (let ([se (collect-constant-strings e)])
+       (cons (While (car se))
+             (cdr se)))]
+  ))
 
 (define (simplify-prog prog)
   (match prog

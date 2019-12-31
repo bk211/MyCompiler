@@ -14,6 +14,7 @@
 (define uniq-lbl 0)
 (define uniq-lbl-e 0)
 (define uniq-if 0)
+(define uniq-while 0)
 
 (define (print-instr instr)
   (match instr
@@ -42,19 +43,24 @@
     [(Beq r1 r2 l)      (printf "  beq $~a, $~a, ~a\n" r1 r2 (format-loc l))]
     [(Beq-lbl r1 r2)    (printf "  beq $~a, $~a, lbl~a\n" r1 r2 uniq-lbl)]
     [(Beq-if r1 r2)     (printf "  beq $~a, $~a, if~a\n" r1 r2 uniq-if)]
+    [(Beq-while r1 r2)  (printf "  beq $~a, $~a, while_e~a\n" r1 r2 uniq-while)]
     [(Beq-lbl-e r1 r2)  (printf "  beq $~a, $~a, lbl_e~a\n" r1 r2 uniq-lbl)]
     [(Bne r1 r2 l)      (printf "  bne $~a, $~a, ~a\n" r1 r2 l)]
     [(Print-label)      (printf "lbl~a:\n" uniq-lbl )]
     [(Print-if)         (printf "if~a:\n" uniq-if )]
+    [(Print-while)      (printf "while~a:\n" uniq-while )]
+    [(Print-while-exit) (printf "while_e~a:\n" uniq-while )]
     [(Print-label-e)    (printf "lbl_e~a:\n" uniq-lbl-e)]
     [(Syscall)          (printf "  syscall\n")]
     [(Jal l)            (printf "  jal ~a\n" (format-loc l))]
     [(Jr r)             (printf "  jr $~a\n" r)]
     [(Jlbl )            (printf "  j lbl~a\n" uniq-lbl)]
-    [(Jlbl-e )            (printf "  j lbl_e~a\n" uniq-lbl-e)]
-    [(Inc-uniq-lbl)        (set! uniq-lbl (+ uniq-lbl 1))]
-    [(Inc-uniq-lbl-e)      (set! uniq-lbl-e (+ uniq-lbl-e 1))]
-    [(Inc-uniq-if)              (set! uniq-if (+ uniq-if 1))]
+    [(Jwhile )          (printf "  j while~a\n" uniq-while)]
+    [(Jlbl-e )          (printf "  j lbl_e~a\n" uniq-lbl-e)]
+    [(Inc-uniq-lbl)     (set! uniq-lbl (+ uniq-lbl 1))]
+    [(Inc-uniq-lbl-e)   (set! uniq-lbl-e (+ uniq-lbl-e 1))]
+    [(Inc-uniq-if)      (set! uniq-if (+ uniq-if 1))]
+    [(Inc-uniq-while)   (set! uniq-while (+ uniq-while 1))]
     ))
 
 (define (print-instructions instrs)
