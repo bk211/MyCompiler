@@ -34,10 +34,11 @@
      [(Lident)                        (Pvar $1 $1-start-pos)]
      [(Lboolean)                      (Pboolean $1 $1-start-pos)]
      [(Lident Lopar args Lcpar)       (Pcall $1 $3 $1-start-pos)]
-     [(expr Llesser expr)             (Pcall '%lesser (list $1 $3) $2-start-pos)] ;; expr < expr
-     [(expr Lgreater expr)            (Pcall '%lesser (list $3 $1) $2-start-pos)]
+     [(expr Llesser expr)             (Pcall '%slt (list $1 $3) $2-start-pos)] ;; expr < expr
+     [(expr Lgreater expr)            (Pcall '%slt (list $3 $1) $2-start-pos)]
      [(expr Lequal expr)              (Pcall '%equal (list $1 $3) $2-start-pos)]
-     [(expr LgreaterOrEqual expr)     (Pcall '%lesser (list $3 $1) $2-start-pos)]
+     [(expr LlesserOrEqual expr)      (Pcall '%lesserOrEqual (list $1 $3) $2-start-pos)]
+     [(expr LgreaterOrEqual expr)     (Pcall '%lesserOrEqual (list $3 $1) $2-start-pos)]
      [(expr Lplus expr)               (Pcall '%add (list $1 $3) $2-start-pos)]
      [(Lplus expr)                    (Pcall '%add (list (Pnum 0 $1-start-pos) $2) $1-start-pos)]
      [(expr Lminus expr)              (Pcall '%sub (list $1 $3) $2-start-pos)]
@@ -51,7 +52,7 @@
      [(expr Lcomma args) (cons $1 $3)]))
    (precs
     (left Lmul Ldiv Lplus Lminus)
-    (right Llesser LgreaterOrEqual Lequal Lgreater))
+    (left Llesser LgreaterOrEqual LlesserOrEqual Lequal Lgreater))
    (error (lambda (tok-ok? tok-name tok-value start-pos end-pos)
             (err (format "syntax error near ~a~a"
                          (substring (symbol->string tok-name) 1)
