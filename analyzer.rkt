@@ -63,6 +63,12 @@
        (unless (equal? 'void (cdr ae))
          (errt 'void (cdr ae) (expr-pos e)))
        (cons (Expr (car ae))
+             env))]   
+    [(Pif cond pos)
+     (let ([ac (analyze-expr cond env)])
+       (unless (equal? 'num (cdr ac))
+         (errt 'bool (cdr ac) (expr-pos cond)))
+       (cons (If (car ac))
              env))]
 ))
 

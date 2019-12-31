@@ -20,8 +20,9 @@
      [(instr)           (list $1)]
      [(instr Lsep prog) (cons $1 $3)])
     (instr
-     [(Lident Lcolon type Lassign expr) (Passign $1 $5 $4-start-pos $3)]
-     [(expr)                (Pexpr $1 $1-start-pos)])
+     [(Lident Lcolon type Lassign expr)     (Passign $1 $5 $4-start-pos $3)]
+     [(Lif expr Lcolon)                     (Pif $2 $1-start-pos)]
+     [(expr)                                (Pexpr $1 $1-start-pos)])
     (type
      [(LTint)        (Tint "int" $1-start-pos)]
      [(LTstr)        (Tstr "str" $1-start-pos)]
@@ -45,6 +46,7 @@
      [(expr Lequal expr)              (Pcall '%equal (list $1 $3) $2-start-pos)]
      [(expr LlesserOrEqual expr)      (Pcall '%lesserOrEqual (list $1 $3) $2-start-pos)]
      [(expr LgreaterOrEqual expr)     (Pcall '%lesserOrEqual (list $3 $1) $2-start-pos)]
+     [(Lendif)                              (Pcall '%endif (list) $1-start-pos)]
       )
     (args
      [()                 (list)]

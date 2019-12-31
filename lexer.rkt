@@ -19,6 +19,7 @@
    Lstrlen
    Lif Lelse
    Lendif Lendelse
+   Lwhile Lendwhile
    Lobra Lcbra
    Lopar Lcpar Lcomma Lsep))
 
@@ -43,6 +44,8 @@
    ["else"       (token-Lelse)]
    ["endif"      (token-Lendif)]
    ["endelse"    (token-Lendelse)]
+   ["while"      (token-Lwhile)]
+   ["endwhile"   (token-Lendwhile)]
    [">"          (token-Lgreater)]
    ["<"          (token-Llesser)]
    [">="         (token-LgreaterOrEqual)]

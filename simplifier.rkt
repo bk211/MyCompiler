@@ -37,6 +37,10 @@
     [(Expr e)
      (let ([se (collect-constant-strings e)])
        (cons (Expr (car se))
+             (cdr se)))]
+    [(If e)
+     (let ([se (collect-constant-strings e)])
+       (cons (If (car se))
              (cdr se)))]))
 
 (define (simplify-prog prog)

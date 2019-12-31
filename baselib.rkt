@@ -19,6 +19,8 @@
          (cons 'print_nl  (Fun 'void (list)))
          (cons 'str_len  (Fun 'num (list 'str)))
          (cons 'read_int  (Fun 'num (list)))
+         (cons '%if   (Fun 'void (list)))
+         (cons '%endif   (Fun 'void (list)))
          (cons 'pair (Fun (Pair 'num) (list 'num (Pair 'num))))
          (cons 'head (Fun 'num (list (Pair 'num))))
          (cons 'tail (Fun (Pair 'num) (list (Pair 'num)))))))
@@ -75,8 +77,7 @@
                      (Syscall)))
          (cons 'print_str
                (list (Lw 'a0 (Mem 'sp 0))
-                     (Li 't0 0)
-
+                     (Li 'v0 PRINT_STRING)
                      (Syscall)))
          (cons 'print_nl
                (list (La 'a0 (Lbl 'newline))
@@ -101,7 +102,16 @@
                (list 
                      (Li 'v0 READ_INT)
                      (Syscall)))
-
+         (cons '%if
+               (list 
+                     (Lw 'v0 (Mem 'sp 0))
+                     (Beq-if 'v0 'zero)
+                     ))
+         (cons '%endif
+               (list 
+                     (Print-if)
+                     (Inc-uniq-if)
+                     ))
          (cons '%add
                (list (Lw 't0 (Mem 'sp 4))
                      (Lw 't1 (Mem 'sp 0))
