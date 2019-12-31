@@ -1,6 +1,8 @@
 \documentclass[12pt, letterpaper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
+\usepackage{listings}
+\usepackage{verbatim} 
 
 \title{Rapport de projet: compilateur }
 \author{Chaolei CAI}
@@ -14,68 +16,113 @@
 
 \tableofcontents
 \section{Introduction}
-Ceci est mon rapport pour le projet du cours de compilation, il est assez courte car la plupart des fonctions sont explicite. 
-Voici le lien vers le d
+Ceci est mon rapport pour le projet du cours de compilation, il est assez courte car la plupart des fonctions sont explicites. 
+Voici le lien vers github du projet: \\https://github.com/bk211/MyCompiler
 
-\section{Get started}
-Once you have logged in, you can see this panel at the top.\\
-\subsection{Explore}
-If you have no specific idea of what you want to improve, try this section.\\
-Explore section allow you to explore different collection of problem classed by theme.\\
-It could be very precise target like Apple/Amazon/Google interview questions or very basic computer science field algorithm or data structure. \\
+\section{001.liec}
+Ajout du type de la variable après ':'\\
+Fonction print\_num qui n'a quasiment pas changée par rapport à ce que nous avons 
+fait en cours, il supporte aussi la fonction print\_int qui fait la même chose.
 
-\subsection{Problems}
-Scroll down your mouse and you will see this interface.\\
-Remember the thousand of problem that I've promessed? There you got.\\
-You can follow the question order or start with the easiest or the hardest.\\
-In my personal experience, most of time I need to spend 30min for a easy question,
-1hour for a medium. I've never solved hard level question because in my personal opinion it's not worthy to spend that much of time, at that level of difficultie, you have to solve it with a lot of constraint such like time complexity or space complexity (If you don't know what it is, it force your program to run over in a certain time and only use a limited memory space).\\
-I can't denie the fact of how it is interesting to program with limited ressources, however I am using LeetCode for academic use rather to proof my programming skill to my future employer.
+\section{001-e1.liec}
+Affiche l'erreur due au différence de type.
 
-\subsection{Mock}
-Mock section is a kind of real time simulation to an job interview, you will be given a limited time to solve one or more question. To be honest, I never used this section because you have to pay to acces specific company's question base. If you are a "free" user like me, you can only draw question randomly.
+\section{002.liec}
+Prise en charge des operations arithmetiques de base comme + - * /.
+\subsection{mise en place}
+En ce qui concerne l'addition ou le soustraction, il y a déja l'instruction add et sub dans MIPS.\\
+Pour la multiplication et la division, l'instruction existe aussi en MIPS, à la différence près qu'il faut rajouter une instruction 
+mflo pour avoir le résultat. Pour la division, il retourne 0 s'il s'agit d'une division par zero, et fait troncature du résultat 
+afin d'avoir un résultat entier.
 
-\subsection{contest}
-Let's move on to contest section, if you want to proof your programming skill, this section is made for you.
-Each week, the website organize an contest that everyone can participate. \\
-The rule is simple, you will be given a limited time to solve a list of question.\\
-The goal is to be the fastest, to add some difficultie, each wrong answer will be associated with a short time penalty.\\
-The price is what we call LeetCode point, what is its purpose? Well, you can exchange it for goodies like pen or t-shirt...
+\section{002-e1.liec}
+L'ordre des priorité est respectée, il y a aussi la possibilité d'ajouter des parenthèses pour influencer l'ordre de calcul.
 
-\subsection{Article}
-In this section, you can acces (well it's not going to be free) question's official solution.
-I will explain you in further
+\section{003.liec}
+Prise en charge du type booleen, qui pour moi, est juste un entier comme les autres.
+\subsection{mise en place}
+Les chaine de charactere "True" et "False" sont lue par le lexer comme des token Lboolean (qui contient la valeur 1 ou 0). 
+Puis au niveau du parseur, il est convertit en Pboolean, enfin, dans analyser, il est reconvertit à la sortie comme un entier normal.
 
-\subsection{Profile}
-Click on your profile picture to access quick profile bar.\\
-From there, you can acces to differents settings and functionality like progress bar or your favorite.\\
-Click on your ID to access your personal profile page.\\
-You can see your last submission, your daily activities or the linking to others social network page (e.g: Linkedin, Google, Github and Facebook).
+\section{004.liec}
+Prise en charge des opérateurs de comparaison.
+\subsection{mise en place}
+L'opérateur '<' est déja implementé dans MIPS via l'instruction slt (set on less than).
+Par extension, si vous inverser l'ordre des expression dans le parseur, vous pouvez facilement obtenir 
+l'opérateur '>'.\\
+Pour l'egalite, c'est un peu plus complex, les arguments sont charges dans les registre t0 et t1. 
+Puis, on effectue t0 < t1 et t1 < t0 par l'instruction slt, les résultats sont stockés dans t2 et t3. 
+Enfin, on fait l'operation binaire 'or' et 'Xori' avec 1.\\
+Cela viens du faite que slt met 0 dans le registre dst s'il y a une égalite, 
+dans ce cas alors, t2 et t3 ont pour valeurs 0, un 'or binaire ne change pas le résultat, 
+v0 recoit alors 0, le Xori le "ou" binaire exclusif avec 1 permet d'inverser le résultat. 
+On obtient ainsi 1 si egalite, 0 sinon.\\
+Dans le cas ou les expressions ne sont pas égaux, l'un des deux slt retourne necessairement 1, 
+1|0 = 1, 1 xor 1 = 0, on obtient alors 0 dans v0.
 
-\section{The Playground}
-Click an problem to start it, you will access to the "playground".\\
+\section{005.liec}
 
-The playground is divided by 2 colums, at the left side, you can read the problem, most of them have few example to illutrate. Finally, at your right side, you have the coding environnement, one of the key feature of LeetCode is that you can run it in an browser, there are nothing to install nor any environment to set up, you are totally free to use any* language to resolve the problem.\\
-*LeetCode support most part of currently popular programming language (C++,Python2/3,C, Java, Javascript etc.)
+\section{006.liec}
+Prise en charge de la fonction str\_len
+\subsection{mise en place} 
+\begin{lstlisting}
+0 (cons 'str_len
+1    (list 
+2          (Lw 'a0 (Mem 'sp 0))
+3          (Li 't0 0)
+4          (Print-label)
+5          (Lb 't1 (Mem 'a0 0))
+6          (Beq-lbl-e 't1 'zero)
+7          (Addi 't0 't0 1)
+8          (Addi 'a0 'a0 1)
+9          (Jlbl)
+10         (Print-label-e)
+11         (Move 'v0 't0)
+12         (Inc-uniq-lbl )
+13         (Inc-uniq-lbl-e )
+    ))
+\end{lstlisting}
+ligne 2: charge la chaine de charactere dans a0
+ligne 3: met le compteur t0 a 0
+ligne 4: crée une lbl unique de depart
+ligne 5: charge un octect dans t1
+ligne 6: si t1 est le dernier character, brancher vers le label de sortie
+ligne 7-8: Sinon, incrémenter le compteur t0, et avancer d'un octet
+ligne 9: aller vers le label de depart
+ligne 10: crée une lbl unique de sortie
+ligne 11: place le résultat dans v0
+ligne 12-13: ne sont pas des instruction compilées à proprement parler, car mips-printer incremente juste 
+les compteurs associés, il ne printf rien. cela me permet d'avoir des label unique.\\ 
+\section{007.liec}
+Je n'ai pas réussit a compiler cet exemple, en théorie, il faut convertir la liste en pair de pair de pair 
+\section{008.liec}
+read\_int marche mais pas les conditions if else native
+\section{008-e1.liec}
+Seul la condition if marche, else n'est pas implementé.\\
+Il faut ajouter une instruction "endif" pour indiquer la fin de la condition if
+\subsection{mise en place} 
+Au niveau de parseur, le matching suivant cree une structure Pif \\
+\begin{lstlisting}
+    (Lif expr Lcolon)                     (Pif \$2 \$1-start-pos)\]
+\end{lstlisting}
 
-Once your have done coding or you want to launch a test, all you have to do is click the "run code" at the right bottom, your code with be tested with the test-case next to you.\\
+Au niveau de l'analyseur, on verifie si l'expression de condition est bien du type entier.\\
+AU niveau du compilateur, similairement a la compilation d'une expression, "compilation-if" ajoute une instruction (Beq-if 'v0 'zero).\\
+Ce dernier est une pseudo instruction pour (Beq \$v0 \$zero (label if uniq))\\
+Enfin, "endif" ajoute le label unique pour servir de sortie si la condition est fausse, si la condition est vrai, le branchement n'est pas prise et les instructions dans la portée du if sont alors executés.\\
 
-This process can be a little bit long, so most of time I'm used to test my code on my local machine with one specific test case. Just to check if my solution can handle this unique test-case.
-At the end, if you are sure with solution, you can click the "submit" button, your code with be tested with all test-case.\\
-Then finally if you pass all test-case, your solution is accepted and you can see the speed of your solution. Also, your program's performance is compared to the others.\\
-In my personal opinion if you are under 20\% you can consider it as very fast, I do not advice you to target the 5\% since most of them are made of low level optimisation such like bitwise operation or syntaxique sugar for a specific programming language.\\
-That been said, I highly suggest to look at the others solutions, it is also an improvement to be able to read others people's code. You can ask yourself questions like why he did it that way? What is different with my solution? Why it is faster or slower than mine etc.\\
-beetween 20 and 70\% I consider it as an good score, if you are over 70\%, that not too bad, you provided an succesful solution, there are probably some optimisation to perform.\\
-
-
-\section{System requirement}
-All you need is a decent browser to have a decent user experience from the website.\\
-I advice you to use popular browser like chrome, safari, firefox.\\
-(Some say that the last microsoft Edge is pretty "ok", but due to his very bad reputation from the past, let's ignore it).
-\section{Troubleshooting}
-For any question that I've not treated, please contact me by email
-\section{Terms and conditions}
-I do not have any relationship with LeetCode and I didn't received any salary or royaltie to promote LeetCode, thus I do not engage any resposability for the conscequences of your usage of LeetCode platform.
-
+Un problème majeur à ce systeme est qu'il ne marche pas pour les if inbriqué, car endif incremente forcement de 1 le compteur de label uniq\\
+\begin{lstlisting}
+    If True:  # debut de premier If -> branchement vers le label_0
+        blabla
+        If False: #debut du deuxieme If -> branchement vers le label 0
+        endif #fin du deuxieme If -> label_0 et incrementation du compteur
+    endif # fin du premier If -> label 1 
+\end{lstlisting}
+Or la bonne ordre serait "branchement vers label 0, branchement vers label 1, label 1, label 0\\
+Neanmois, il marche pour les If successif comme vous pouvez le voir dans cet exemple.\\
+\section{009.liec}
+N'est pas fonctionnel, j'ai tenté de faire la manipulation proche de if mais cela crée des problèmes de mémoire. 
+Par exemple, la variable n dans le test et le decrementation n'est pas pareil au niveau de la memoire.
 
 \end{document}

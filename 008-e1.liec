@@ -1,0 +1,10 @@
+a: int = read_int()
+if a < 10:
+    print_str("plus petit")
+    print_nl()
+endif
+if a > 10:
+    print_str("plus grand")
+    print_nl()
+endif
+    print_str("ici dans tous les cas")
