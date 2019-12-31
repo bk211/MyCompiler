@@ -17,9 +17,20 @@
          (cons 'print_bool (Fun 'void (list 'num)))
          (cons 'print_str (Fun 'void (list 'str)))
          (cons 'print_nl  (Fun 'void (list)))
+         (cons 'str_len  (Fun 'num (list 'str)))
          (cons 'pair (Fun (Pair 'num) (list 'num (Pair 'num))))
          (cons 'head (Fun 'num (list (Pair 'num))))
          (cons 'tail (Fun (Pair 'num) (list (Pair 'num)))))))
+
+
+(define uniq-lbl 0)
+(define (Inc-uniq-lbl)
+  (set! uniq-lbl (+ uniq-lbl 1)))
+
+(define uniq-lbl-exit 0)
+(define (Inc-uniq-lbl-e)
+  (set! uniq-lbl-exit (+ uniq-lbl-exit 1)))
+
 
 (define *baselib*
   (make-immutable-hash
@@ -73,12 +84,32 @@
                      (Syscall)))
          (cons 'print_str
                (list (Lw 'a0 (Mem 'sp 0))
-                     (Li 'v0 PRINT_STRING)
+                     (Li 't0 0)
+
                      (Syscall)))
          (cons 'print_nl
                (list (La 'a0 (Lbl 'newline))
                      (Li 'v0 PRINT_STRING)
                      (Syscall)))
+         (cons 'str_len
+               (cdr (cdr (list 
+                     (Inc-uniq-lbl)
+                     (Inc-uniq-lbl-e)
+                     (Lw 'a0 (Mem 'sp 0))
+                     (Li 't0 0)
+                     (Print-label (Make-lbl uniq-lbl))
+                     (Lb 't1 (Mem 'a0 0))
+                     (Beq 't1 'zero (Make-lbl-e uniq-lbl-exit))
+                     (Addi 't0 't0 1)
+                     (Addi 'a0 'a0 1)
+                     (J (Make-lbl uniq-lbl))
+                     (Print-label (Make-lbl-e uniq-lbl-exit))
+                     (Move 'v0 't0)
+                     ))))
+         (cons '%add
+               (list (Lw 't0 (Mem 'sp 4))
+                     (Lw 't1 (Mem 'sp 0))
+                     (Add 'v0 't0 't1)))
          (cons 'pair
                (list (Jal (Lbl "_pair"))))
          (cons 'head

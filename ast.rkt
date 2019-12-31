@@ -38,6 +38,7 @@
 (struct Label (lbl))
 (struct Li (dst imm))
 (struct La (dst loc))
+(struct Lb (dst loc))
 (struct Addi (dst reg imm))
 (struct Add (dst rg1 rg2))
 (struct Sub (dst rg1 rg2))
@@ -62,10 +63,13 @@
 (struct Syscall ())
 (struct Jal (loc))
 (struct Jr (reg))
+(struct J (Lbl))
 
 ; locations
 (struct Mem (reg offset))
 (struct Lbl (name))
+(struct Make-lbl (l))
+(struct Make-lbl-e (l))
 
 ; contants
 (define PRINT_INT    1)

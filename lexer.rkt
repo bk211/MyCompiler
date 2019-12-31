@@ -16,6 +16,7 @@
    LTint LTstr LTboolean
    Llesser LgreaterOrEqual LlesserOrEqual Lequal Lgreater
    Lplus Lminus Lmul Ldiv
+   Lstrlen
    Lopar Lcpar Lcomma Lsep))
 
 (define-lex-abbrev identifier

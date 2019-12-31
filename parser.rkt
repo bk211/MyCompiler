@@ -45,6 +45,7 @@
      [(Lminus expr)                   (Pcall '%sub (list (Pnum 0 $1-start-pos) $2) $1-start-pos)]
      [(expr Lmul expr)                (Pcall '%mul (list $1 $3) $2-start-pos)]
      [(expr Ldiv expr)                (Pcall '%div (list $1 $3) $2-start-pos)]
+;;     [(Lstrlen Lopar Lstr Lcpar)      (Pcall '%strlen (list $3) $1-start-pos)]
      )
     (args
      [()                 (list)]

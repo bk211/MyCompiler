@@ -4,12 +4,14 @@
          "ast.rkt")
 
 (provide mips-print)
-
 (define (format-loc location)
   (match location
     [(Lbl n) (format "~a" n)]
     [(Mem r o) (format "~a($~a)" o r)]
-    [(? symbol? r) (format "$~a" r)]))
+    [(? symbol? r) (format "$~a" r)]
+    [(Make-lbl l) (format "Lbl~a" l)]
+    [(Make-lbl-e l) (format "Lble~a" l)]
+    ))
 
 (define (print-instr instr)
   (match instr
@@ -18,6 +20,7 @@
     [(Move d r)         (printf "  move $~a, $~a\n" d r)]
     [(Li d i)           (printf "  li $~a, ~a\n" d i)]
     [(La d l)           (printf "  la $~a, ~a\n" d (format-loc l))]
+    [(Lb d l)           (printf "  lb $~a, ~a\n" d (format-loc l))]
     [(Sw r l)           (printf "  sw $~a, ~a\n" r (format-loc l))]
     [(Lw r l)           (printf "  lw $~a, ~a\n" r (format-loc l))]
     [(Addi d r i)       (printf "  addi $~a, $~a, ~a\n" d r i)]
@@ -34,12 +37,14 @@
     [(Andi d r i)       (printf "  andi $~a, $~a, ~a\n" d r i)]
     [(Xor d r s)        (printf "  xor $~a, $~a, $~a\n" d r s)]
     [(Xori d r i)       (printf "  xori $~a, $~a, ~a\n" d r i)]
-    [(Beq r1 r2 l)      (printf "  beq $~a, $~a, ~a\n" r1 r2 l)]
+    [(Beq r1 r2 l)      (printf "  beq $~a, $~a, ~a\n" r1 r2 (format-loc l))]
     [(Bne r1 r2 l)      (printf "  bne $~a, $~a, ~a\n" r1 r2 l)]
-    [(Print-label l)    (printf "~a:\n" l)]
+    [(Print-label l)    (printf "~a:\n" (format-loc l))]
     [(Syscall)          (printf "  syscall\n")]
     [(Jal l)            (printf "  jal ~a\n" (format-loc l))]
-    [(Jr r)             (printf "  jr $~a\n" r)]))
+    [(Jr r)             (printf "  jr $~a\n" r)]
+    [(J l)              (printf "  j ~a\n" (format-loc l))]
+    ))
 
 (define (print-instructions instrs)
   (for-each print-instr instrs))
