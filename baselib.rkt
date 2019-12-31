@@ -23,16 +23,6 @@
          (cons 'head (Fun 'num (list (Pair 'num))))
          (cons 'tail (Fun (Pair 'num) (list (Pair 'num)))))))
 
-
-(define uniq-lbl 0)
-(define (Inc-uniq-lbl)
-  (set! uniq-lbl (+ uniq-lbl 1)))
-
-(define uniq-lbl-exit 0)
-(define (Inc-uniq-lbl-e)
-  (set! uniq-lbl-exit (+ uniq-lbl-exit 1)))
-
-
 (define *baselib*
   (make-immutable-hash
    (list (cons '%add
@@ -93,21 +83,20 @@
                      (Li 'v0 PRINT_STRING)
                      (Syscall)))
          (cons 'str_len
-               (cdr (cdr (list 
-                     (Inc-uniq-lbl)
-                     (Inc-uniq-lbl-e)
+               (list 
                      (Lw 'a0 (Mem 'sp 0))
                      (Li 't0 0)
-                     (Print-label (Make-lbl uniq-lbl))
+                     (Print-label)
                      (Lb 't1 (Mem 'a0 0))
-                     (Beq 't1 'zero (Make-lbl-e uniq-lbl-exit))
+                     (Beq-lbl-e 't1 'zero)
                      (Addi 't0 't0 1)
                      (Addi 'a0 'a0 1)
-                     (J (Make-lbl uniq-lbl))
-                     (Print-label (Make-lbl-e uniq-lbl-exit))
+                     (Jlbl)
+                     (Print-label-e)
                      (Move 'v0 't0)
-                     (Inc )
-                     ))))
+                     (Inc-uniq-lbl )
+                     (Inc-uniq-lbl-e )
+                     ))
          (cons 'read_int
                (list 
                      (Li 'v0 READ_INT)

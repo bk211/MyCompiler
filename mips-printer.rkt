@@ -1,7 +1,7 @@
 #lang racket/base
 
 (require racket/match
-         "ast.rkt")
+         "ast.rkt" "baselib.rkt")
 
 (provide mips-print)
 (define (format-loc location)
@@ -9,9 +9,10 @@
     [(Lbl n) (format "~a" n)]
     [(Mem r o) (format "~a($~a)" o r)]
     [(? symbol? r) (format "$~a" r)]
-    [(Make-lbl l) (format "Lbl~a" l)]
-    [(Make-lbl-e l) (format "Lble~a" l)]
     ))
+
+(define uniq-lbl 0)
+(define uniq-lbl-e 0)
 
 (define (print-instr instr)
   (match instr
@@ -38,12 +39,18 @@
     [(Xor d r s)        (printf "  xor $~a, $~a, $~a\n" d r s)]
     [(Xori d r i)       (printf "  xori $~a, $~a, ~a\n" d r i)]
     [(Beq r1 r2 l)      (printf "  beq $~a, $~a, ~a\n" r1 r2 (format-loc l))]
+    [(Beq-lbl r1 r2)    (printf "  beq $~a, $~a, lbl~a\n" r1 r2 uniq-lbl)]
+    [(Beq-lbl-e r1 r2)  (printf "  beq $~a, $~a, lbl_e~a\n" r1 r2 uniq-lbl)]
     [(Bne r1 r2 l)      (printf "  bne $~a, $~a, ~a\n" r1 r2 l)]
-    [(Print-label l)    (printf "~a:\n" (format-loc l))]
+    [(Print-label)      (printf "lbl~a:\n" uniq-lbl )]
+    [(Print-label-e)    (printf "lbl_e~a:\n" uniq-lbl-e)]
     [(Syscall)          (printf "  syscall\n")]
     [(Jal l)            (printf "  jal ~a\n" (format-loc l))]
     [(Jr r)             (printf "  jr $~a\n" r)]
-    [(J l)              (printf "  j ~a\n" (format-loc l))]
+    [(Jlbl )            (printf "  j lbl~a\n" uniq-lbl)]
+    [(Jlbl-e )            (printf "  j lbl_e~a\n" uniq-lbl-e)]
+    [(Inc-uniq-lbl)        (set! uniq-lbl (+ uniq-lbl 1))]
+    [(Inc-uniq-lbl-e)      (set! uniq-lbl-e (+ uniq-lbl-e 1))]
     ))
 
 (define (print-instructions instrs)
