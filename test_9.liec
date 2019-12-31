@@ -1,7 +1,0 @@
-a = 42
-b = a + 9
-print_num(b)
-print_nl()
-c = pair(b, pair(a, ()))
-print_num(head(tail(c)))
-print_nl()

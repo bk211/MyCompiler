@@ -1,3 +1,0 @@
-a = 42
-print_num(a)
-print_nl()
