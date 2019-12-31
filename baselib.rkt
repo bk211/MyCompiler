@@ -18,6 +18,7 @@
          (cons 'print_str (Fun 'void (list 'str)))
          (cons 'print_nl  (Fun 'void (list)))
          (cons 'str_len  (Fun 'num (list 'str)))
+         (cons 'read_int  (Fun 'num (list)))
          (cons 'pair (Fun (Pair 'num) (list 'num (Pair 'num))))
          (cons 'head (Fun 'num (list (Pair 'num))))
          (cons 'tail (Fun (Pair 'num) (list (Pair 'num)))))))
@@ -105,7 +106,13 @@
                      (J (Make-lbl uniq-lbl))
                      (Print-label (Make-lbl-e uniq-lbl-exit))
                      (Move 'v0 't0)
+                     (Inc )
                      ))))
+         (cons 'read_int
+               (list 
+                     (Li 'v0 READ_INT)
+                     (Syscall)))
+
          (cons '%add
                (list (Lw 't0 (Mem 'sp 4))
                      (Lw 't1 (Mem 'sp 0))

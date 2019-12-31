@@ -74,4 +74,6 @@
 ; contants
 (define PRINT_INT    1)
 (define PRINT_STRING 4)
+(define READ_INT     5)
+(define READ_STRING  8)
 (define SBRK         9)
